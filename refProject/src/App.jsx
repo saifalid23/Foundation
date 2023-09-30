@@ -2,21 +2,13 @@ import { useState, useCallback, useEffect, useRef } from 'react'
 
 
 function App() {
-  const [length, setLength] = useState(9)
+  const [length, setLength] = useState(0)
   const [numberAllowed, setNumberAllowed] = useState(false)
   const [charAllowed, setCharAllowed] = useState(false)
   const [password,setPassword] = useState("")
   // const [isHover, setIsHover] = useState(false)
-
-  //useref hookuse
+ 
   const passwordRef = useRef(null)
-
-  // const handleMouseEnter = () => {
-  //   setIsHover(true);
-  // }
-  // const handleMouseLeave = () => {
-  //   setIsHover (false);
-  // }
 
   const passwordGenerator = useCallback(() => {
     let pass = ""
@@ -36,16 +28,17 @@ function App() {
     passwordRef.current?.select()
     passwordRef.current?.setSelectionRange(0,100)
     window.navigator.clipboard.writeText(password)
+    
   },[password])
 
 
   useEffect(()=> {
-    passwordGenerator()
-  },[length,numberAllowed,charAllowed,passwordGenerator])
+    console.log("effed")
+  },[length,numberAllowed,charAllowed])
   return (
     <>
 
-      <div className='w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-3 my-8 text-orange-500 bg-gray-700'>
+      <div className='w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-3 my-8 bg-gray-700'>
         
         <div className='flex shadow rounded-lg overflow-hidden mb-4'>
           <input 
@@ -57,14 +50,15 @@ function App() {
           ref={passwordRef}
           />
 
-          <button onClick={copyPasswordToClipboard} className='outline-none bg-blue-500 text-white px-3 py-0.5 shrink-0 hover:bg-sky-500' >Copy</button>
+          <button onClick={copyPasswordToClipboard} 
+          className='outline-none bg-blue-500 text-white px-3 py-0.5 shrink-0 hover:bg-sky-500 hover:scale-105 ;' >Copy</button>
         </div>
 
         <div className='flex text-sm gap-x-2'>
           <div className='flex items-center gap-x-1'>
             <input 
             type="range" 
-            min={6}
+            min={0}
             max={100}
             value={length}
             className='cursor-pointer'
@@ -93,7 +87,7 @@ function App() {
               setCharAllowed((prev) => !prev)
             }} />
           <label htmlFor="charInput">Characters</label>
-
+          <button onClick= {passwordGenerator} className='outline-none bg-yellow-500 rounded text-Black px-3 py-2 shrink-0 hover:bg-white-500 hover:scale-105'>Gen</button>
           </div>
         </div>
 
